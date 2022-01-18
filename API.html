@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<body style="background-color: #ddbb90">
+<head>
+  <title>Quote of the Day</title>
+        <meta charset="utf-8"/>
+  
+  <script>
+    function getQuote() {
+      
+      request = new XMLHttpRequest();
+      console.log("1 - request object created");
+
+ 
+    request.open("GET", "https://favqs.com/api/qotd", true)
+
+      console.log("2 - opened request file");
+ 
+      request.onreadystatechange = function() {
+        console.log("3 - readystatechange event fired.");
+ 
+        if (request.readyState == 4 && request.status == 200) {
+
+          console.log("5 - response received");
+          result = request.responseText;
+          
+          data = JSON.parse(result);
+          
+          document.getElementById("quote").innerHTML =data["quote"]["body"]; 
+            
+        }
+        else if (request.readyState == 4 && request.status != 200) {
+
+          document.getElementById("data").innerHTML = "Something is wrong!  Check the logs to see where this went off the rails";
+
+        }
+
+        else if (request.readyState == 3) {
+
+          document.getElementById("data").innerHTML = "Too soon!  Try again";
+
+        }
+
+      }
+
+      request.send();
+      console.log("4 - Request sent");
+    }
+  </script>
+
+  </head>
+  <body onload="getQuote()">
+
+  <div id="quote" style="font-style:italic" position=fixed></div>
+  </body>
+  <br>
+  <h3 style="text-align:center" position=fixed>We hope you enjoyed your Quote of the Day!</h3>
+  <br>
+  <p style="text-align:center" position=fixed> The API selected is a quote of the day API which gives the user a new inspirational quote every time the webpage is refreshed.</p>
+  <p style="text-align:center" position=fixed> The website that I found the API on is: https://favqs.com/api/qotd</p>
+  <p style="text-align:center" position=fixed> This API could be helpful for a meditation application or a wellness store's website. Inspirational quotes would be commonly found on either of these sites and an API that provides a new quote each time the site is reloaded would be very useful.</p>
+  <div id="name"></div>
+
+
+</body>
+</html>
